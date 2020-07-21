@@ -13,6 +13,11 @@ module.exports = {
         var resposta = await Restaurant.find({ name: name })
         retornoJson(response, resposta)
     },
+    async findId(request, response, next) {
+        var id= request.params.id
+        var resposta = await Restaurant.findById(id)
+        response.status(200).json(resposta)
+    },
     async findCuisine(request, response) {
         const cuisine = request.params.cuisine
         var resposta = await Restaurant.find({ cuisine: cuisine });
@@ -21,6 +26,7 @@ module.exports = {
     async createRestaurant(request, response) {
         const restaurantBody = request.body
         const restaurant = new Restaurant(restaurantBody)
+        console.log(restaurantBody)
         await restaurant.save()
             .then(() => {
                 // if(restaurant.name!=undefined){
@@ -33,6 +39,16 @@ module.exports = {
             })
     },
     async deleteRestaurant(request, response){
+        var id = request.params.id
+        await Restaurant.deleteOne({ _id: id})
+        .then((resp) => {
+            if(resp.deletedCount > 0){
+                response.status(200).json()
+            }
+        })
+        .catch((error) => {
+           return response.status(500).json({ message: error.message })
+        })
 
     }
 

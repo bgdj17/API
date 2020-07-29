@@ -7,5 +7,6 @@ routes.get('/restaurant/name/:name', RestaurantController.findName);
 routes.get('/restaurant/:id', RestaurantController.findId);
 routes.get('/restaurants/cuisine/:cuisine', RestaurantController.findCuisine)
 routes.post('/restaurant/', RestaurantController.createRestaurant)
-routes.put('/restaurant', RestaurantController.deleteRestaurant)
+routes.delete('/restaurant/:id', RestaurantController.deleteRestaurant)
+// routes.delete('/restaurant', RestaurantController);
 module.exports = routes;

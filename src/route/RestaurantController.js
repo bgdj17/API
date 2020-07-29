@@ -7,6 +7,7 @@ module.exports = {
         const skip = (page - 1) * limit;
         var resposta = await Restaurant.find().limit(limit).skip(skip)
         response.status(200).json(resposta);
+       
     },
     async findName(request, response, next) {
         var name = request.params.name
@@ -40,20 +41,19 @@ module.exports = {
     },
     async deleteRestaurant(request, response){
         var id = request.params.id
-        await Restaurant.deleteOne({ _id: id})
+         Restaurant.deleteOne({_id: id})
         .then((resp) => {
-            if(resp.deletedCount > 0){
-                response.status(200).json()
+            if(resp != undefined||resp != null ){
+                response.status(200).json({ message: "Deletado com sucesso"})
             }
+            
         })
         .catch((error) => {
            return response.status(500).json({ message: error.message })
         })
 
     }
-
 };
-
 function retornoJson(response, resposta) {
     if (resposta.length > 0) {
         return response.status(200).json(resposta)
